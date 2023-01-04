@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Homework</title>
+</head>
+
+<body>
+  <!--
+Обязательное задание.
+
+Необходимо данное задание выполнить в es5 стиле и в es6 стиле.
+Необходимо создать функцию-конструктор/класс для продукта.
+Названия: `ProductES5` для es5 стиля, `ProductES6` для es6 стиля.
+При создании объекта от функции-конструктора/класса необходимо передавать имя
+и цену товара, эта информация должна быть сохранена в объекте.
+Также у объекта должна быть возможность выполнить метод `make25Discount`, данный
+метод должен уменьшать стоимость продукта на 25%.
+Необходимо продемонстрировать работу с объектом (в свободной форме).
+-->
+  <script>
+    "use strict";
+
+    // ES5
+    function ProductES5(name, price) {
+      this.name = name;
+      this.price = price;
+      this.cheker = false;
+    }
+    ProductES5.prototype.make25Discount = function () {
+      if (this.cheker) {
+        console.log('Скидка уже активна')
+      } else {
+        this.price *= 0.75;
+        this.cheker = true;
+        console.log('Цена изменилась с учетом скидки');
+      }
+    }
+
+    // ES6
+    class ProductES6 {
+      constructor(name, price) {
+        this.name = name;
+        this.price = price;
+        this.cheker = false;
+      }
+      make25Discount() {
+        if (this.cheker) {
+          console.log('Скидка уже активна')
+        } else {
+          this.price *= 0.75;
+          this.cheker = true;
+          console.log('Цена изменилась с учетом скидки');
+        }
+      }
+    }
+
+
+    productES5Demo('apple', 79);
+    productES6Demo('pear', 124)
+
+
+    function productES5Demo(name, price) {
+      console.log('Демонстрация работы объекта в стиле ES5');
+      console.log('Создание объекта');
+      let demoProduct = new ProductES5(name, price);
+      console.log('Имя продукта: ' + demoProduct.name);
+      console.log('Цена продукта: ' + demoProduct.price);
+      console.log('Делаем скидку...')
+      demoProduct.make25Discount();
+      console.log('Цена с учетом скидки: ' + demoProduct.price);
+    }
+
+    function productES6Demo(name, price) {
+      console.log('Демонстрация работы объекта в стиле ES6');
+      console.log('Создание объекта');
+      let demoProduct = new ProductES6(name, price);
+      console.log('Имя продукта: ' + demoProduct.name);
+      console.log('Цена продукта: ' + demoProduct.price);
+      console.log('Делаем скидку...')
+      demoProduct.make25Discount();
+      console.log('Цена с учетом скидки: ' + demoProduct.price);
+    }
+  </script>
+</body>
+
+</html>
