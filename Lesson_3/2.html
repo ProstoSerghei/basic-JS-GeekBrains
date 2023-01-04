@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Homework</title>
+</head>
+
+<body>
+  <!--
+Необязательное задание, но желательно сделать.
+
+Необходимо данное задание выполнить в es5 стиле и в es6 стиле.
+Необходимо создать функцию-конструктор/класс для поста в социальной сети.
+Названия: `PostES5` для es5 стиля и `PostES6` для es6 стиля.
+Пост должен хранить:
+1. Автора поста (имени достаточно).
+2. Текст поста.
+3. Дату и время последнего изменения поста.
+Данные автора поста и текст поста необходимо передавать при создании
+экземпляра объекта.
+Каждому экземпляру объекта должен быть доступен метод `edit`, который будет
+менять текст поста.
+
+---
+
+Необходимо создать функцию-конструктор/класс для закрепленного поста в
+социальной сети.
+Названия: `AttachedPostES5` для es5 стиля и `AttachedPostES6` для es6 стиля.
+Закрепленный пост должен наследоваться от обычного поста.
+Данные автора поста и текст поста необходимо передавать при создании
+экземпляра объекта.
+Закрепленный пост должен иметь свойство `highlighted`, в котором по умолчанию
+будет лежать значение false (это свойство будет обозначать, будет ли наш
+закрепленный пост подсвечен).
+У экземпляров объекта закрепленного поста должен быть метод с названием
+`makeTextHighlighted`, который сделает так, чтобы наш пост стал подсвеченным
+(будет менять свойство `highlighted`).
+
+---
+
+Подсказки:
+1. Задание сложное, советую делать по аналогии с примером на онлайн-занятии.
+2. Обратите внимание что пост хранит "дату и время последнего изменения
+поста", это значит что если пост кто-то изменит (например вызовет какой-то
+метод, который изменит что-то в посте), дата и время последнего изменения
+поста также должна измениться.
+3. Выполняйте все по порядку, не стоит пытаться сделать все сразу, иначе можно
+что-нибудь пропустить.
+4. Если непонятно условие - задайте вопрос.
+-->
+  <script>
+    "use strict";
+
+    // ES5
+    function PostES5(author, content) {
+      this.author = author;
+      this.content = content;
+      this.date = String(new Date());
+    }
+
+    PostES5.prototype.edit = function (newContent) {
+      this.content = newContent;
+      this.date = String(new Date());
+    }
+
+    function AttachedPostES5(author, content) {
+      PostES5.call(this, author, content);
+      this.highlighted = false;
+    }
+
+    AttachedPostES5.prototype = Object.create(PostES5.prototype);
+    AttachedPostES5.prototype.constructor = AttachedPostES5;
+
+    AttachedPostES5.prototype.makeTextHighlighted = function () {
+      if (this.highlighted) {
+        this.highlighted = false;
+      } else {
+        this.highlighted = true;
+      }
+    }
+
+
+    // ES6
+    class PostES6 {
+      constructor(author, content) {
+        this.author = author;
+        this.content = content;
+        this.date = String(new Date());
+      }
+      edit(newContent) {
+        this.content = newContent;
+        this.date = String(new Date());
+      }
+    }
+
+    class AttachedPostES6 extends PostES6 {
+      constructor(author, content) {
+        super(author, content);
+        this.highlighted = false;
+      }
+      makeTextHighlighted() {
+        if (this.highlighted) {
+          this.highlighted = false;
+        } else {
+          this.highlighted = true;
+        }
+      }
+    }
+
+
+
+    // Demo
+    let name = 'Serghei';
+    let text = 'Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.';
+
+
+    demoPostES5(name, text);
+    demoPostES6(name, text);
+
+
+    function demoPostES5(name, text) {
+      let post = new AttachedPostES5(name, text);
+      console.log('ES5\n\n');
+      console.log('post.author: ' + post.author);
+      console.log('post.content: ' + post.content);
+      console.log('post.date: ' + post.date);
+      console.log('post.highlighted: ' + post.highlighted);
+      setTimeout(() => {
+        console.log('\npost.edit(\'Empty string\')\nРедактируем пост ES5...');
+        post.edit('Empty string');
+        console.log('post.content с новым содержимым: ' + post.content);
+        console.log('post.date: ' + post.date);
+      }, 2000);
+      console.log('post.makeTextHighlighted()\nВключаем подсветку...');
+      post.makeTextHighlighted();
+      console.log('post.highlighted: ' + post.highlighted + '\n\n');
+    }
+
+    function demoPostES6(name, text) {
+      let post = new AttachedPostES6(name, text);
+      console.log('ES6\n\n');
+      console.log('post.author: ' + post.author);
+      console.log('post.content: ' + post.content);
+      console.log('post.date: ' + post.date);
+      console.log('post.highlighted: ' + post.highlighted);
+      setTimeout(() => {
+        console.log('\npost.edit(\'Empty string\')\nРедактируем пост ES6...');
+        post.edit('Empty string');
+        console.log('post.content с новым содержимым: ' + post.content);
+        console.log('post.date: ' + post.date);
+      }, 2000);
+      console.log('post.makeTextHighlighted()\nВключаем подсветку...');
+      post.makeTextHighlighted();
+      console.log('post.highlighted: ' + post.highlighted + '\n\n');
+    }
+  </script>
+</body>
+
+</html>
