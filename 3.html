@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+    crossorigin="anonymous" />
+  <style>
+    i {
+      font-size: 50px;
+    }
+
+    .golden {
+      color: gold;
+    }
+  </style>
+</head>
+
+<body>
+  <!--
+Необязательное задание.
+
+Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
+стирать, код с решением задачи пишем под комментарием.
+-->
+
+  <div class="stars_container">
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+  </div>
+
+  <script>
+    "use strict";
+
+    /*
+    1. При наведении на любую из звезд, данной звезде должен ставиться класс
+    golden, также такой класс должен ставиться всем звездам до нее слева.
+    */
+    const startsContainerEl = document.querySelector('.stars_container');
+    const iEls = document.querySelectorAll('.fas');
+    startsContainerEl.addEventListener('mouseover', event => {
+      let targetEl = event.target;
+      if (targetEl.tagName === 'I') {
+        cleanAllStarts();
+        for (let indexEl = 0; indexEl < iEls.length; indexEl++) {
+          if (iEls[indexEl] === targetEl) {
+            iEls[indexEl].classList.add('golden');
+            break;
+          } else {
+            iEls[indexEl].classList.add('golden');
+          }
+        }
+      }
+    });
+
+    /*
+    2. Когда мы уводим курсор мыши от звезды, все поставленные классы из первого
+    задания должны быть удалены.
+     */
+    startsContainerEl.addEventListener('mouseout', event => {
+      let targetEl = event.target;
+      if (
+        (targetEl.tagName === 'DIV' && event.relatedTarget.tagName !== 'I') ||
+        (targetEl.tagName === 'I' && event.relatedTarget.tagName !== 'DIV')
+      ) {
+        cleanAllStarts();
+      }
+    });
+
+
+    function cleanAllStarts() {
+      for (let indexEl = 0; indexEl < iEls.length; indexEl++) {
+        iEls[indexEl].classList.remove('golden');
+      }
+    }
+    /*
+    3. Когда мы переводим мышь от одной звезды к другой, у нас могут мигать
+    звезды (временно могут становиться черными). Почему так? Напишите словами.
+    Можем ли мы это исправить? Если да, то предложите решение.
+    */
+   // Получилось без мерцания. Как я понял, из-за того что уводил с 'i', он удалял все классы, затем снова их рисовал, когда наводил на следующую звезду.
+   // Теперь он проверяет куда уводится курсор, если 'true', удаляет.
+   // Как мне кажется, можно лучше сделать, проверять 'Закрашена ли звезда' или что-то подобное.
+   // Однако после проверок, работает как требует задание и без мерцаний.
+
+  </script>
+</body>
+
+</html>
